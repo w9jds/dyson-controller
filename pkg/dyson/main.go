@@ -66,7 +66,7 @@ func (dysonAPI *Client) Login(email string, password string, country string) {
 }
 
 // GetDevices returns a list of devices attached to your dyson account
-func (dysonAPI *Client) GetDevices() ([]map[string]interface{}, error) {
+func (dysonAPI *Client) GetDevices() ([]Device, error) {
 	request, err := http.NewRequest("GET", baseAPI+"/v2/provisioningservice/manifest", nil)
 	if err != nil {
 		return nil, err
@@ -77,7 +77,7 @@ func (dysonAPI *Client) GetDevices() ([]map[string]interface{}, error) {
 		return nil, err
 	}
 
-	var devices []map[string]interface{}
+	var devices []Device
 	if err := json.Unmarshal(resp, &devices); err != nil {
 		return nil, err
 	}
